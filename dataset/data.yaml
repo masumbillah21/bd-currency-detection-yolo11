@@ -2,13 +2,7 @@ path: dataset
 train: train/images
 val: valid/images
 test: test/images
-names:
-  0: 1_takar_coin
-  1: 1_takas
-  2: 2_taka
-  3: tk_20
-  4: tk_50
-  5: tk_100
-  6: tk_200
-  7: tk_500
-  8: tk_1000
+
+nc: 13
+names: ["1_takar_coin", "1_taka", "2_taka", "2_takar_coin", "5_taka", "5_takar_coin", "10_taka", "20_taka", "50_taka", "100_taka", "200_taka", "500_taka", "1000_taka"]
+
