@@ -1,0 +1,217 @@
+# Bangladeshi Currency Detection using YOLO11
+
+A deep learning project for detecting and classifying Bangladeshi currency notes and coins using YOLOv11.
+
+## Overview
+
+This project leverages the YOLOv11 object detection model to identify and classify various denominations of Bangladeshi currency (notes and coins). The model is trained on a custom dataset containing images of:
+
+- **Notes**: 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 Taka
+- **Coins**: 1, 2, 5 Taka coin
+- And other denominations
+
+## Project Structure
+
+```
+bd-currency-detection-yolo11/
+├── script.ipynb                 # Main Jupyter notebook for training and inference
+├── rename.py                    # Utility script for batch renaming images
+├── split.py                     # Utility script for splitting dataset
+├── yolo11n.pt                   # Pretrained YOLOv11 nano model weights
+├── README.md                    # This file
+├── dataset/                     # Dataset directory
+│   ├── data.yaml               # Dataset configuration
+│   ├── train/                  # Training set (70%)
+│   │   ├── images/
+│   │   └── labels/
+│   ├── valid/                  # Validation set (15%)
+│   │   ├── images/
+│   │   └── labels/
+│   └── test/                   # Test set (15%)
+│       ├── images/
+│       └── labels/
+└── runs/                        # Training outputs
+    └── bdt_yolo11_train/       # Trained model and logs
+        ├── weights/            # Best and last model weights
+        ├── results.csv         # Training metrics
+        └── args.yaml           # Training configuration
+```
+
+## Requirements
+
+- Python 3.8+
+- ultralytics
+- matplotlib
+
+## Installation
+
+1. **Clone or download the project**
+   ```bash
+   cd bd-currency-detection-yolo11
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pip install ultralytics matplotlib
+   ```
+
+3. **Verify dataset**
+   The dataset should be in the `dataset/` directory with the following structure:
+   - `dataset/train/` - Training images and labels
+   - `dataset/valid/` - Validation images and labels
+   - `dataset/test/` - Test images and labels
+   - `dataset/data.yaml` - Dataset configuration file
+
+## Usage
+
+### Training
+
+Run the Jupyter notebook [script.ipynb](script.ipynb) or execute training directly:
+
+```python
+from ultralytics import YOLO
+
+# Load pretrained model
+model = YOLO("yolo11n.pt")
+
+# Train the model
+results = model.train(
+    data="dataset/data.yaml",
+    epochs=100,
+    batch=16,
+    imgsz=640,
+    project="runs",
+    name="bdt_yolo11_train"
+)
+```
+
+**Training Parameters:**
+- **Epochs**: 100
+- **Batch Size**: 16
+- **Image Size**: 640×640
+- **Optimizer**: Default (SGD)
+- **Confidence Threshold**: 0.25
+
+### Validation
+
+Evaluate the trained model on the validation set:
+
+```python
+metrics = model.val(
+    data="dataset/data.yaml",
+    split="valid",
+    imgsz=640
+)
+```
+
+### Testing
+
+Run inference on test images:
+
+```python
+predictions = model.predict(
+    source="dataset/test/images",
+    imgsz=640,
+    conf=0.25,
+    save=True
+)
+```
+
+Results are saved in `runs/detect/` directory.
+
+### Batch Prediction
+
+For custom images or video:
+
+```python
+# Single image
+results = model.predict(source="path/to/image.jpg", conf=0.25)
+
+# Video
+results = model.predict(source="path/to/video.mp4", conf=0.25)
+
+# Folder
+results = model.predict(source="path/to/images/", conf=0.25)
+```
+
+## Dataset Information
+
+### Classes (13 total)
+Currency denominations detected by the model. Check `dataset/data.yaml` for the complete class mapping.
+
+### Dataset Statistics
+- **Training samples**: ~70% of total images
+- **Validation samples**: ~15% of total images
+- **Test samples**: ~15% of total images
+
+To view dataset statistics, run the analysis cells in [script.ipynb](script.ipynb):
+- Dataset split summary (images/labels/missing/empty)
+- Boxes per split and per class
+- File consistency checks
+
+## Model Checkpoints
+
+Trained model weights are saved in:
+- **Best weights**: `runs/bdt_yolo11_train/weights/best.pt`
+- **Last weights**: `runs/bdt_yolo11_train/weights/last.pt`
+
+## Performance
+
+Training metrics and validation results are logged in:
+- `runs/bdt_yolo11_train/results.csv` - Training curves
+- Training visualizations are available in the runs directory
+
+Key metrics tracked:
+- Box loss, Cls loss, DFL loss
+- Precision, Recall, mAP50, mAP50-95
+- Per-class metrics
+
+## Utility Scripts
+
+### rename.py
+Batch rename images in the dataset (useful for data preprocessing).
+
+### split.py
+Split dataset into train/valid/test sets with specified ratios.
+
+## Troubleshooting
+
+**Missing dataset**: Ensure the `dataset/` folder exists with proper subdirectories and YAML configuration.
+
+**CUDA issues**: If using GPU, ensure PyTorch is installed with CUDA support:
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+**Out of memory**: Reduce batch size or image size in training parameters.
+
+## Results
+
+After training, view results in Jupyter notebook or check the runs directory:
+- Confusion matrices
+- Detection results on test images
+- Training/validation curves
+- Per-class metrics
+
+## Future Improvements
+
+- [ ] Add more currency denominations
+- [ ] Expand dataset with more diverse lighting conditions
+- [ ] Experiment with different YOLOv11 variants (s, m, l)
+- [ ] Implement real-time detection with webcam
+- [ ] Create a deployment API
+- [ ] Add TensorRT export for faster inference
+
+## License
+
+This project uses the YOLOv11 model from Ultralytics. Please refer to their documentation and licensing terms.
+
+## References
+
+- [Ultralytics YOLOv11 Documentation](https://docs.ultralytics.com/)
+- [YOLOv11 GitHub Repository](https://github.com/ultralytics/ultralytics)
+
+---
+
+**Author**: Masum  
+**Last Updated**: January 2026
