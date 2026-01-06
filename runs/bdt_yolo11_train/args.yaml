@@ -1,8 +1,8 @@
 task: detect
 mode: train
 model: yolo11n.pt
-data: dataset\data.yaml
-epochs: 100
+data: dataset/data.yaml
+epochs: 40
 time: null
 patience: 100
 batch: 16
@@ -103,4 +103,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: D:\Masum\bd-currency-detection-yolo11\runs\bdt_yolo11_train
+save_dir: /Users/hmmasumbillah/Documents/assignment 11/bd-currency-detection-yolo11/runs/bdt_yolo11_train
