@@ -174,17 +174,6 @@ Batch rename images in the dataset (useful for data preprocessing).
 ### split.py
 Split dataset into train/valid/test sets with specified ratios.
 
-## Troubleshooting
-
-**Missing dataset**: Ensure the `dataset/` folder exists with proper subdirectories and YAML configuration.
-
-**CUDA issues**: If using GPU, ensure PyTorch is installed with CUDA support:
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-```
-
-**Out of memory**: Reduce batch size or image size in training parameters.
-
 ## Results
 
 After training, view results in Jupyter notebook or check the runs directory:
@@ -192,15 +181,6 @@ After training, view results in Jupyter notebook or check the runs directory:
 - Detection results on test images
 - Training/validation curves
 - Per-class metrics
-
-## Future Improvements
-
-- [ ] Add more currency denominations
-- [ ] Expand dataset with more diverse lighting conditions
-- [ ] Experiment with different YOLOv11 variants (s, m, l)
-- [ ] Implement real-time detection with webcam
-- [ ] Create a deployment API
-- [ ] Add TensorRT export for faster inference
 
 ## License
 
