@@ -75,7 +75,7 @@ async def predict(file: UploadFile = File(None)):
 
     # ---- run inference ----
     try:
-        results = model.predict(img, conf=0.25, verbose=False)
+        results = model.predict(img, conf=0.6, iou=0.5, verbose=False)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Inference failed: {str(e)}")
 
@@ -83,7 +83,6 @@ async def predict(file: UploadFile = File(None)):
     detections: List[Dict[str, Any]] = []
 
     if r.boxes is not None and len(r.boxes) > 0:
-        # xyxy in pixels, confidence, class id
         boxes_xyxy = r.boxes.xyxy.tolist()
         confs = r.boxes.conf.tolist()
         clss = r.boxes.cls.tolist()
