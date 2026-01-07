@@ -8,7 +8,8 @@ from PIL import Image, UnidentifiedImageError
 from ultralytics import YOLO
 
 APP_TITLE = "BDT Denomination Detection API"
-MODEL_PATH = Path("./runs/bdt_yolo11_train/weights/best.pt")
+MODEL_PATH = Path("runs/detect/bdt_yolo11_train/weights/best.pt")
+
 
 CLASS_NAMES = [
     "1_takar_coin",
