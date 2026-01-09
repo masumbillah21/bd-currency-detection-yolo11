@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: bd-currency-detection
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10"
+    autoDeploy: true
+    healthCheckPath: /health
+    scaling:
+      minInstances: 1
+      maxInstances: 1
