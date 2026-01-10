@@ -111,6 +111,11 @@ This will:
 
 ### API Endpoints
 
+#### Live Deployment
+- **Live API**: https://bd-currency-detection-latest.onrender.com
+- **Live API Docs**: https://bd-currency-detection-latest.onrender.com/docs (Swagger UI)
+
+#### Local Deployment
 Once the Docker container is running, you can access:
 - **API Root**: `http://localhost:8000`
 - **API Docs**: `http://localhost:8000/docs` (Swagger UI)
